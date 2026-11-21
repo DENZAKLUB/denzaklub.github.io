@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DENZA KLUB</title>
+<meta name="description" content="Clube independente de entusiastas Denza no Brasil: notícias, recalls, tecnologia, tutoriais animados do B5 e manuais.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: sereno, técnico e premium; um clube de donos falando com precisão de engenheiro
+   IDEA: o site se comporta como o painel de um off-road de luxo, com telas, modos e leituras
+   PICTURE: o B5 em perfil, desenhado em linhas próprias, sobre um relevo em camadas; a cor da pintura muda com o seletor
+   COLOUR and TYPE: pedra #ecebe5, oliva #3d4630 em faixas cheias, sinal lima #d4f55c; Sora para títulos, Inter para texto
+   LAYOUT: barra fixa, hero com carro grande, faixas cheias alternadas até o rodapé, conteúdo até 1240px */
+:root{color-scheme:light dark;--bg:light-dark(#ecebe5,#0f110c);--ink:light-dark(#15170f,#ecebe4);--mut:light-dark(#5a5d50,#a9ab9c);--card:light-dark(#f7f6f1,#181b13);--line:light-dark(#d3d1c6,#2c3024);--ol:#3d4630;--ol2:#2b3221;--lime:#d4f55c;--acc:light-dark(#4c5a2e,#d4f55c);--paint:#5e6b47}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Sora,Inter,sans-serif;line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(38px,6vw,64px);font-weight:700;letter-spacing:-.02em}
+h2{font-size:clamp(28px,3.6vw,42px);font-weight:600;letter-spacing:-.01em}
+h3{font-size:20px;font-weight:600}
+a{color:inherit}p{margin:.6em 0}
+.wrap{max-width:1240px;margin:0 auto}
+.band{padding:clamp(40px,6vw,88px) max(5vw,16px)}
+.dark{background:var(--ol);color:#eef0e4}.dark .mut,.deep .mut{color:#c3c8ae}.deep{background:var(--ol2);color:#eef0e4}
+.mut{color:var(--mut)}
+.lead{font-size:18px;max-width:62ch}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+/* nav */
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:20px;padding:12px max(5vw,16px);max-width:1340px;margin:0 auto}
+.logo{font:700 19px Sora;letter-spacing:.04em;text-decoration:none;white-space:nowrap}.logo b{color:var(--acc)}
+.links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+.links a{flex:none;text-decoration:none;font-size:14px;font-weight:500;padding:10px 12px;border-radius:10px;color:var(--mut)}
+.links a:hover,.links a:focus-visible{color:var(--ink);background:var(--card)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 22px;border-radius:12px;border:0;font:600 15px Inter;cursor:pointer;text-decoration:none;background:var(--lime);color:#15170f}
+.btn.ghost{background:transparent;color:inherit;border:1.5px solid currentColor}
+.btn:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--lime);outline-offset:2px}
+/* hero */
+.hero{background:var(--ol2);color:#eef0e4;overflow:hidden;position:relative}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:32px;align-items:center}
+.hero .stats{display:flex;flex-wrap:wrap;gap:28px;margin:28px 0}
+.stat b{display:block;font:600 clamp(26px,3vw,34px) Sora;color:var(--lime);white-space:nowrap}.stat span{font-size:13px;color:#c3c8ae}
+.fig{position:relative;min-height:340px}.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.paints{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.sw{width:44px;height:44px;border-radius:50%;border:3px solid transparent;cursor:pointer;box-shadow:inset 0 0 0 2px rgba(255,255,255,.25)}
+.sw[aria-pressed=true]{border-color:var(--lime)}
+#paintName{font-size:14px;color:#c3c8ae;margin-left:6px}
+#body,#body2{transition:fill .6s ease}
+/* grids & cards */
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:6px}
+.dark .card,.deep .card,.dark .vid{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+.meta{font-size:13px;color:var(--mut);display:flex;gap:10px;flex-wrap:wrap}.dark .meta,.deep .meta,.dark .vid .meta{color:#c3c8ae}
+.chip{font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;background:color-mix(in srgb,var(--acc) 18%,transparent);color:var(--ink)}
+.dark .chip,.deep .chip{background:rgba(212,245,92,.18);color:#eef0e4}
+.src{font-size:13px;margin-top:auto;padding-top:8px}
+.head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{min-height:44px;padding:0 16px;border-radius:22px;border:1px solid var(--line);background:transparent;color:inherit;font:500 14px Inter;cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+/* models */
+.model{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:28px;padding:28px 0;border-top:1px solid rgba(255,255,255,.16);align-items:start}
+.model .price{font:600 22px Sora;color:var(--lime);white-space:nowrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.specs div{border-left:2px solid var(--lime);padding-left:12px}.specs b{display:block;font:600 20px Sora;white-space:nowrap}.specs span{font-size:13px;color:#c3c8ae}
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{font:600 13px Inter;color:var(--mut)}
+.scroll{overflow-x:auto}
+/* videos */
+.vids{display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr))}
+.vid{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.vid video{display:block;width:100%;aspect-ratio:16/9;background:#1b1640}
+.vid div{padding:16px 20px}
+/* form */
+.gate{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+form{display:grid;gap:14px;max-width:520px}
+label{font-size:14px;font-weight:600;display:grid;gap:6px}
+input,select{font:16px Inter;min-height:48px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);width:100%}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:14px}.check input{width:22px;min-height:22px;margin-top:2px;flex:none}
+.err{color:#d2453b;font-size:13px;min-height:1em}
+.dl{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.locked .dl .btn{opacity:.45;pointer-events:none}
+.notice{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:14px 18px;font-size:14px}
+footer{background:#0b0d08;color:#b9bca9;font-size:14px}
+footer a{color:#eef0e4}
+@media(max-width:900px){.hero .wrap,.gate,.model{grid-template-columns:minmax(0,1fr)}.fig{min-height:240px}}
+@media(max-width:600px){.nav{flex-wrap:wrap;gap:8px 12px}.nav .btn{margin-left:auto}.links{order:3;width:100%;margin:0 -8px}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;white-space:normal;color:var(--mut);font-size:12px}.stack td:empty{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#body,#body2{transition:none}.sweep{display:none}}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+<header><nav class="nav" aria-label="Principal">
+ <a class="logo" href="#inicio">DENZA <b>KLUB</b></a>
+ <div class="links"><a href="#noticias">Notícias</a><a href="#modelos">Modelos</a><a href="#tecnologia">Tecnologia</a><a href="#diferenciais">Diferenciais</a><a href="#recalls">Recalls</a><a href="#tutoriais">Tutoriais</a><a href="#manuais">Manuais</a></div>
+ <a class="btn" href="#manuais" style="min-height:40px;padding:0 16px">Entrar no clube</a>
+</nav></header>
+
+<section class="band hero" id="inicio"><div class="wrap">
+ <div>
+  <p style="color:var(--lime);font-weight:600;margin:0 0 12px">Clube independente de donos e fãs Denza no Brasil</p>
+  <h1>Luxo que encara a trilha, explicado por quem dirige.</h1>
+  <p class="lead" style="color:#d6dac4">Notícias, recalls, tecnologia e tutoriais animados da central multimídia do B5. Tudo checado em fontes públicas e escrito para o dono.</p>
+  <div class="stats">
+   <div class="stat"><b>4,8 s</b><span>0 a 100 km/h do B5</span></div>
+   <div class="stat"><b>31,8 kWh</b><span>bateria Blade</span></div>
+   <div class="stat"><b>2.500 kg</b><span>reboque</span></div>
+  </div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="#tutoriais">Ver tutoriais</a><a class="btn ghost" href="#noticias">Últimas notícias</a></div>
+ </div>
+ <div>
+  <div class="fig" style="min-height:0;aspect-ratio:900/420"><svg viewBox="0 0 900 420" role="img" aria-label="Ilustração de um SUV off-road em perfil sobre montanhas">
+   <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a5638"/><stop offset="1" stop-color="#2b3221"/></linearGradient>
+   <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9fb6c2"/><stop offset=".55" stop-color="#2d3a44"/><stop offset="1" stop-color="#151b20"/></linearGradient>
+   <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+   <g id="wheel"><circle r="62" fill="#111"/><circle r="50" fill="#1d1f1a"/><circle r="38" fill="#7f8577"/><circle r="38" fill="none" stroke="#2a2d25" stroke-width="6" stroke-dasharray="14 9"/><circle r="12" fill="#2a2d25"/></g></defs>
+   <rect width="900" height="420" rx="24" fill="url(#sky)"/>
+   <circle cx="720" cy="90" r="46" fill="#d4f55c" opacity=".9"/>
+   <path d="M0 270 L120 170 L210 235 L330 120 L450 230 L560 150 L700 250 L800 180 L900 240 V420 H0Z" fill="#56633f"/>
+   <path d="M0 300 L150 240 L300 290 L470 220 L640 300 L780 250 L900 290 V420 H0Z" fill="#3a4429"/>
+   <path d="M0 352 Q450 330 900 352 V420 H0Z" fill="#20261a"/>
+   <g transform="translate(110 92)">
+    <ellipse cx="340" cy="268" rx="330" ry="14" fill="#000" opacity=".35"/>
+    <path id="body" d="M30 160 L36 92 Q40 70 66 66 L150 60 L205 14 Q214 6 228 6 L560 6 Q590 6 596 30 L612 86 L660 96 Q676 100 678 118 L680 176 Q680 196 660 198 L612 198 A72 72 0 0 0 470 198 L230 198 A72 72 0 0 0 88 198 L46 198 Q30 196 30 180Z" fill="var(--paint)" stroke="#11140c" stroke-width="3"/>
+    <path id="body2" d="M36 140 L678 140 L679 160 L33 160Z" fill="var(--paint)" style="filter:brightness(.78)"/>
+    <path d="M222 20 L346 20 L346 86 L170 86Z" fill="url(#glass)"/><path d="M360 20 L480 20 L480 86 L360 86Z" fill="url(#glass)"/><path d="M494 20 L572 20 Q584 20 588 34 L600 86 L494 86Z" fill="url(#glass)"/>
+    <path d="M36 92 Q40 70 66 66 L150 60 L205 14 Q214 6 228 6 L560 6 Q590 6 596 30 L612 86" fill="none" stroke="url(#shine)" stroke-width="10"/>
+    <rect x="642" y="112" width="34" height="12" rx="4" fill="#ff5a3c"/><rect x="34" y="108" width="30" height="12" rx="4" fill="#f4f7e8"/>
+    <rect x="300" y="110" width="40" height="6" rx="3" fill="#11140c" opacity=".6"/><rect x="420" y="110" width="40" height="6" rx="3" fill="#11140c" opacity=".6"/>
+    <rect x="214" y="-4" width="360" height="8" rx="4" fill="#11140c"/>
+    <use href="#wheel" x="159" y="198"/><use href="#wheel" x="541" y="198"/>
+    <rect class="sweep" x="-80" y="0" width="60" height="200" fill="#fff" opacity=".12" transform="skewX(-20)"><animate attributeName="x" values="-120;760;760" keyTimes="0;.45;1" dur="6s" repeatCount="indefinite"/></rect>
+   </g>
+   <text x="34" y="400" font-family="Sora" font-size="15" fill="#c3c8ae">Ilustração DENZA KLUB · não é uma foto oficial</text>
+  </svg></div>
+  <div class="paints" role="group" aria-label="Cores do B5 no Brasil" id="paints"></div>
+ </div>
+</div></section>
+
+<section class="band" id="noticias"><div class="wrap">
+ <div class="head"><div><h2>Notícias</h2><p class="mut" style="margin:6px 0 0">Resumo do clube, sempre com link para a reportagem original.</p></div>
+  <div class="filters" id="filt" role="group" aria-label="Filtrar notícias"></div></div>
+ <div class="grid" id="news"></div>
+</div></section>
+
+<section class="band dark" id="modelos"><div class="wrap">
+ <h2>A linha Denza no Brasil</h2>
+ <p class="lead mut">Três modelos à venda e dois confirmados. Preços sugeridos de lançamento, com base na imprensa especializada.</p>
+ <div id="models" style="margin-top:28px"></div>
+</div></section>
+
+<section class="band" id="tecnologia"><div class="wrap">
+ <h2>Tecnologia da marca</h2>
+ <p class="lead mut">As siglas que aparecem na ficha técnica e o que elas mudam no dia a dia.</p>
+ <div class="grid" id="tech" style="margin-top:28px"></div>
+</div></section>
+
+<section class="band deep" id="diferenciais"><div class="wrap">
+ <h2>B5 frente à concorrência</h2>
+ <p class="lead mut">A imprensa coloca o B5 ao lado de Land Rover Defender, Jeep Wrangler Rubicon e GWM Tank 300. Veja onde ele se destaca e onde vale ficar atento.</p>
+ <div class="grid" id="diffs" style="margin-top:28px"></div>
+ <div class="card" style="margin-top:20px"><h3>Pontos de atenção</h3><p>Com a bateria descarregada, o consumo medido pelo Inmetro é de 8,4 km/l na cidade e 7,9 km/l na estrada. Para gastar menos, recarregue sempre que possível. Alguns donos também relatam falhas de software, como preferências que não ficam salvas e atraso para ativar a chave digital.</p><p class="src"><a href="https://autopapo.com.br/noticia/denza-b5-consumo-inmetro/" target="_blank" rel="noopener">AutoPapo</a> · <a href="https://www.reclameaqui.com.br/empresa/denza-brasil/lista-reclamacoes/" target="_blank" rel="noopener">Reclame Aqui</a></p></div>
+</div></section>
+
+<section class="band" id="recalls"><div class="wrap">
+ <div class="head"><div><h2>Recalls</h2><p class="mut" style="margin:6px 0 0">Atualizado em 21 de novembro de 2026.</p></div><a class="btn" href="https://www.gov.br/pt-br/servicos/realizar-consulta-sobre-recall-de-veiculos" target="_blank" rel="noopener">Consultar pelo chassi no gov.br</a></div>
+ <div class="scroll"><table class="stack"><thead><tr><th>Mercado</th><th>Modelo</th><th>Situação</th><th>Detalhes</th></tr></thead><tbody id="rec"></tbody></table></div>
+ <p class="mut" style="font-size:14px">Recall pendente fica ligado ao veículo, não ao dono. O conserto é gratuito. Consulte pela placa ou pelo chassi no Portal de Serviços da Senatran ou no app Carteira Digital de Trânsito, com sua conta gov.br.</p>
+</div></section>
+
+<section class="band dark" id="tutoriais"><div class="wrap">
+ <h2>Tutoriais animados da central do B5</h2>
+ <p class="lead mut">Vídeos de cerca de 25 segundos, com o Lelo, nosso mascote. Os nomes dos menus podem variar conforme a versão do software.</p>
+ <div class="vids" id="vids" style="margin-top:28px"></div>
+</div></section>
+
+<section class="band" id="manuais"><div class="wrap gate">
+ <div>
+  <h2>Manuais e guias para download</h2>
+  <p class="lead mut">Cadastre-se no mailing do clube para liberar os downloads. Você recebe novidades, alertas de recall e novos tutoriais.</p>
+  <form id="lead" novalidate>
+   <label>Nome completo<input id="f-nome" name="nome" autocomplete="name" required></label>
+   <label>E-mail<input id="f-email" name="email" type="email" autocomplete="email" required></label>
+   <label>Celular com DDD<input id="f-tel" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 91234-5678" required></label>
+   <label>Seu Denza<select id="f-modelo" name="modelo"><option>B5 GL</option><option>B5 GS</option><option>Z9 GT</option><option>D9</option><option>Ainda não tenho</option></select></label>
+   <label class="check"><input type="checkbox" id="f-lgpd" required>Aceito receber comunicações do DENZA KLUB e o uso dos meus dados conforme a LGPD. Posso cancelar quando quiser.</label>
+   <div class="err" id="err" role="alert"></div>
+   <button class="btn" type="submit" id="send">Liberar downloads</button>
+  </form>
+ </div>
+ <div id="dls" class="locked">
+  <div class="notice" id="status">Preencha o cadastro para liberar os arquivos.</div>
+  <div id="dlist"></div>
+ </div>
+</div></section>
+
+<footer class="band"><div class="wrap" style="display:grid;gap:18px">
+ <div class="logo" style="color:#eef0e4">DENZA <b style="color:var(--lime)">KLUB</b></div>
+ <p>Site independente de fãs, sem vínculo com a Denza, a BYD ou suas concessionárias. Marcas e nomes de modelos pertencem aos seus donos. As ilustrações e animações são originais do clube. Antes de qualquer decisão, confira as informações no manual e com a rede oficial.</p>
+ <p>Banco de imagens: aceitamos fotos de membros e imagens com licença livre, sempre com crédito. Escreva para <span>contato@denzaklub.com</span>.</p>
+ <p>© 2026 DENZA KLUB · denzaklub.com</p>
+</div></footer>
+
+<script>
+{
+const CFG={formEndpoint:''}; // hospedagem estática: URL do Formspree ou do Google Apps Script que recebe os cadastros
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const PAINTS=[['Olive Green','#5e6b47'],['Pearl Gold','#c8b48a'],['Sky Blue','#8fb8cf'],['Stone Gray','#9a9a94'],['Onyx Black','#1f2120']];
+$('#paints').innerHTML=PAINTS.map((p,i)=>`<button class="sw" style="background:${p[1]}" aria-pressed="${i===0}" aria-label="${p[0]}" data-i="${i}"></button>`).join('')+'<span id="paintName">Olive Green</span>';
+$('#paints').addEventListener('click',e=>{const b=e.target.closest('.sw');if(!b)return;const p=PAINTS[b.dataset.i];document.documentElement.style.setProperty('--paint',p[1]);document.querySelectorAll('.sw').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#paintName').textContent=p[0]});
+
+const NEWS=[
+ {d:'Ago 2026',c:'Lançamentos',t:'Z9 GT e D9 chegam, com recarga ultrarrápida',x:'Em evento em São Paulo, a Denza lançou o cupê elétrico Z9 GT, com 952 cv, 0 a 100 km/h em 2,7 s e preço de R$ 670 mil. Também lançou a minivan D9, de sete lugares, por R$ 800 mil. Na mesma ocasião, apresentou o Flash Charging, que promete levar a bateria de 10% a 70% em cerca de 5 minutos. A loja de Brasília recebe o primeiro carregador.',s:[['Vrum','https://www.vrum.com.br/mercado/2026/08/7483979-denza-apresenta-z9-gt-d9-e-tecnologia-de-recarga-em-5-minutos.html'],['Itatiaia','https://www.itatiaia.com.br/auto/marca-de-luxo-da-byd-lanca-dois-carros-e-carregador-ultrarrapido-no-brasil/']]},
+ {d:'Out 2026',c:'Mercado',t:'B5 lidera o segmento premium pelo quarto mês seguido',x:'Em setembro, o B5 voltou a ser o modelo premium mais vendido do Brasil, com 646 emplacamentos. Com oito meses de operação, a Denza já era a quarta marca premium em vendas.',s:[['Webmotors','https://www.webmotors.com.br/wm1/lancamentos/denza-b5-precos'],['A Tarde','https://atarde.com.br/autos/denza-lanca-eletricos-de-luxo-no-brasil-que-carregam-em-9-minutos-1399226']]},
+ {d:'2026',c:'Lançamentos',t:'Linha 2027 do B5 ganha versão de entrada',x:'O B5 passou a ter duas versões: GL, por R$ 405 mil, e GS, por R$ 449 mil. A GS tem até 31 cm de vão livre, contra 22 cm da GL. A tela de 12,3" para o passageiro dianteiro também é exclusiva da GS.',s:[['Webmotors','https://www.webmotors.com.br/denza/b5/2027']]},
+ {d:'2026',c:'Lançamentos',t:'Denza Z e B3 são os próximos da fila',x:'O superesportivo elétrico Denza Z e o SUV B3 vão se juntar a B5, Z9 GT e D9 no Brasil. O Z fez testes em Nürburgring e terá estreia global no Goodwood Festival of Speed.',s:[['Webmotors','https://www.webmotors.com.br/wm1/?p=899088'],['Forbes','https://forbes.com.br/forbes-life/forbes-motors/2026/05/denza-z-mais-potente-que-ferrari-o-supercarro-eletrico-de-r-15-milhao-que-vem-ao-brasil/']]},
+ {d:'Mai 2026',c:'Mundo',t:'Atualização OTA melhora reboque e off-road na Austrália',x:'A primeira grande atualização remota para B5 e B8 australianos recalibrou a plataforma DMO para dar mais controle no fora de estrada e na areia. Ela também trouxe melhorias de segurança e conveniência. Ainda não há confirmação para o Brasil.',s:[['GoAuto','https://web1.goauto.com.au/news/denza/denza-ota-update-boosts-b5-b8-capabilities/2026-05-29/99385.html'],['CarExpert','https://www.carexpert.com.au/car-news/denza-over-the-air-updates-bring-improvements-to-towing-off-road-ability']]},
+ {d:'Fev 2026',c:'Pós-venda',t:'Assistência em todo o país nos dois primeiros anos',x:'Os clientes Denza passaram a ter assistência da marca em todo o território nacional durante os dois primeiros anos de garantia. Segundo a empresa, isso faz parte de uma estratégia para tornar o pós-venda uma experiência premium.',s:[['Forbes','https://forbes.com.br/forbes-life/forbes-motors/2026/02/por-dentro-da-estrategia-da-denza-para-transformar-pos-venda-em-experiencia-premium/']]},
+ {d:'Nov 2025',c:'Lançamentos',t:'Denza estreia no Salão do Automóvel com o B5',x:'A divisão de luxo da BYD estreou no 31º Salão de São Paulo com o SUV híbrido plug-in B5, por R$ 436 mil, e com uma rede própria de concessionárias. Fundada em 2010 como uma parceria entre BYD e Mercedes-Benz, a marca é controlada só pela BYD desde 2024.',s:[['Forbes','https://forbes.com.br/forbes-life/2025/11/denza-marca-de-luxo-da-byd-chega-ao-brasil-com-suv-off-road/'],['InstaCarro','https://www.instacarro.com/blog/?p=313167']]}
+];
+const CATS=['Todas',...new Set(NEWS.map(n=>n.c))];let cat='Todas';
+const drawNews=()=>{$('#filt').innerHTML=CATS.map(c=>`<button aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join('');
+ $('#news').innerHTML=NEWS.filter(n=>cat==='Todas'||n.c===cat).map(n=>`<article class="card"><div class="meta"><span class="chip">${n.c}</span><span>${n.d}</span></div><h3>${n.t}</h3><p>${n.x}</p><p class="src">Fontes: ${n.s.map(s=>`<a href="${s[1]}" target="_blank" rel="noopener">${s[0]}</a>`).join(' · ')}</p></article>`).join('')};
+$('#filt').addEventListener('click',e=>{const b=e.target.closest('button');if(b){cat=b.dataset.c;drawNews()}});drawNews();
+
+const MODELS=[
+ {n:'B5',k:'SUV off-road híbrido plug-in',p:'R$ 405 mil a R$ 449 mil',x:'O B5 é construído sobre chassi, como um jipe, e tem motor 1.5 turbo que trabalha mais como gerador, junto com dois motores elétricos. Vem com suspensão ativa DiSUS-P, 11 airbags e três telas na versão GS. Cores: Pearl Gold, Olive Green, Sky Blue, Stone Gray e Onyx Black.',s:[['4,8 s','0 a 100 km/h'],['31,8 kWh','bateria Blade'],['81 / 74 km','autonomia elétrica GL / GS'],['83 L','tanque'],['2.500 kg','reboque'],['180 km/h','velocidade máxima']]},
+ {n:'Z9 GT',k:'Cupê shooting brake 100% elétrico',p:'R$ 670 mil',x:'Tem três motores elétricos sobre a arquitetura e³ e é o primeiro Denza vendido no Brasil compatível com o Flash Charging. Com 5,18 m de comprimento, é mais longo que o Porsche Panamera.',s:[['952 cv','potência combinada'],['2,7 s','0 a 100 km/h'],['5,18 m','comprimento'],['488 L','porta-malas']]},
+ {n:'D9',k:'Minivan executiva elétrica',p:'R$ 800 mil',x:'Sete lugares e foco no transporte executivo e familiar de alto padrão, com cabine muito silenciosa.',s:[['7','lugares'],['até 600 km','autonomia']]},
+ {n:'Z e B3',k:'Confirmados para o Brasil',p:'a anunciar',x:'O Denza Z é um superesportivo elétrico. O B3 é um SUV que deve entrar abaixo do B5. Datas e preços ainda não foram divulgados.',s:[]}
+];
+$('#models').innerHTML=MODELS.map(m=>`<div class="model"><div><p class="mut" style="margin:0">${m.k}</p><h3 style="font-size:clamp(30px,4vw,44px)">${m.n}</h3><p class="price">${m.p}</p></div><div><p>${m.x}</p>${m.s.length?`<div class="specs">${m.s.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>`:''}</div></div>`).join('')+`<p class="mut" style="font-size:13px">Fontes: Webmotors, Vrum, Itatiaia, Canal VE, Revista Carro, Mecânica Online. Autonomia elétrica do B5 pelos números brasileiros. O ciclo chinês CLTC indica de 90 a 100 km.</p>`;
+
+const TECH=[
+ ['DMO','Dual Mode Off-road','Plataforma híbrida 4x4 do B5: bateria Blade, dois motores elétricos e um motor turbo a gasolina. Fica no modo elétrico na cidade e tem tração integral na trilha, com bloqueios de diferencial.'],
+ ['DiSUS-P','Suspensão ativa hidráulica','Controla a carroceria e o amortecimento, ajustando altura e firmeza para o asfalto ou para a terra. Na GS, o vão livre chega a 31 cm.'],
+ ['Blade','Bateria de lâminas LFP','Química de fosfato de ferro-lítio em células longas, que ocupam o pacote como lâminas. O foco é segurança térmica e durabilidade.'],
+ ['e³','Três motores elétricos','Um motor dianteiro e dois traseiros independentes no Z9 GT. Cada roda traseira recebe torque separado, o que ajuda nas curvas.'],
+ ['Flash Charging','Recarga de até 1.500 kW','Promete levar a bateria de 10% a 70% em cerca de 5 minutos em carros compatíveis. Começa pela loja de Brasília e vai para toda a rede.'],
+ ['OTA','Atualização pela internet','Novos recursos e correções chegam sem visita à oficina. Veja como instalar no tutorial 4.']
+];
+$('#tech').innerHTML=TECH.map(t=>`<div class="card"><span class="chip" style="align-self:flex-start">${t[0]}</span><h3>${t[1]}</h3><p class="mut">${t[2]}</p></div>`).join('');
+
+const DIFFS=[
+ ['Elétrico no dia a dia','De 74 a 81 km de autonomia só na bateria. Dá para fazer a semana inteira sem gasolina e ainda manter o alcance de um jipe na estrada.'],
+ ['Desempenho de esportivo','0 a 100 km/h em 4,8 s, com o torque imediato dos motores elétricos. Isso é raro em SUVs construídos sobre chassi.'],
+ ['Chassi com suspensão ativa','Combina a robustez de um carro sobre chassi com a suspensão DiSUS-P, que muda altura e firmeza.'],
+ ['Cabine de luxo de série','Três telas na GS, bancos com massagem, compartimento térmico, som premium com alto-falantes nos encostos de cabeça e reconhecimento facial.'],
+ ['Segurança','11 airbags e 96% de aço de alta resistência na estrutura, além de um pacote completo de assistentes à condução.'],
+ ['Trabalho pesado','Reboca até 2.500 kg e tem tomada residencial para alimentar equipamentos no acampamento.']
+];
+$('#diffs').innerHTML=DIFFS.map(d=>`<div class="card"><h3>${d[0]}</h3><p class="mut">${d[1]}</p></div>`).join('');
+
+const REC=[
+ ['Brasil','Denza B5, Z9 GT e D9','Nenhuma campanha encontrada','Não encontramos recall da Denza registrado no Brasil até esta data. Confira o seu veículo pelo chassi no gov.br.'],
+ ['China','Fangchengbao Bao 5 (base do B5)','Encerrada, jan. 2025','6.843 unidades fabricadas entre 16/10/2023 e 01/02/2024, por risco de fumaça e fogo no controlador dos dois motores. A peça foi trocada sem custo. Os carros vendidos no Brasil chegaram depois desse lote.']
+];
+$('#rec').innerHTML=REC.map(r=>`<tr>${r.map((c,i)=>`<td>${i===2?`<span class="chip">${c}</span>`:c}</td>`).join('')}</tr>`).join('');
+
+const VIDS=[['01-espelhamento','Espelhe seu celular na tela','Bluetooth, código de pareamento e espelhamento dos apps.'],['02-chave-nfc','Chave digital no celular','Ative a chave NFC no app e cadastre-a no carro.'],['03-modos-conducao','Modos de condução e terreno','EV, HEV, modos de terreno e ajuste da suspensão.'],['04-atualizacao-ota','Atualize o software (OTA)','Baixe e instale as atualizações com segurança.']];
+$('#vids').innerHTML=VIDS.map((v,i)=>`<div class="vid"><video controls preload="none" playsinline poster="videos/${v[0]}.jpg" aria-label="${v[1]}"><source src="videos/${v[0]}.mp4" type="video/mp4"></video><div><p class="meta" style="margin:0">Tutorial ${i+1} · cerca de 25 s</p><h3>${v[1]}</h3><p class="mut" style="margin:4px 0 0">${v[2]}</p></div></div>`).join('');
+
+const DLS=[
+ {t:'Guia rápido da central multimídia do B5',d:'PDF · 2 páginas · feito pelo DENZA KLUB',f:'guia-rapido-b5-denzaklub.pdf'},
+ {t:'Manual do Proprietário oficial',d:'Portal de manuais da BYD Brasil. Os manuais Denza saem pela rede oficial.',u:'https://www.bydcars.com.br/manuais-byd-auto'},
+ {t:'Consulta de recall pelo chassi',d:'Serviço oficial do gov.br',u:'https://www.gov.br/pt-br/servicos/realizar-consulta-sobre-recall-de-veiculos'}
+];
+$('#dlist').innerHTML=DLS.map((x,i)=>`<div class="dl"><div><h3 style="font-size:17px">${x.t}</h3><p class="mut" style="margin:2px 0 0;font-size:14px">${x.d}</p></div>${x.f?`<button class="btn" data-f="${i}" type="button">Baixar PDF</button>`:`<a class="btn ghost" href="${x.u}" target="_blank" rel="noopener">Abrir</a>`}</div>`).join('');
+
+let unlocked=false;try{unlocked=localStorage.getItem('dk-lead')==='1'}catch(e){}
+const unlock=nome=>{unlocked=true;$('#dls').classList.remove('locked');$('#status').textContent=nome?`Obrigado, ${nome}! Os downloads estão liberados.`:'Downloads liberados. Bom proveito!';try{localStorage.setItem('dk-lead','1')}catch(e){}};
+if(unlocked)unlock('');
+
+const tel=$('#f-tel');tel.addEventListener('input',()=>{let d=tel.value.replace(/\D/g,'').slice(0,11);tel.value=d.length>6?`(${d.slice(0,2)}) ${d.slice(2,d.length-4)}-${d.slice(-4)}`:d.length>2?`(${d.slice(0,2)}) ${d.slice(2)}`:d});
+$('#lead').addEventListener('submit',async e=>{e.preventDefault();
+ const lead={nome:$('#f-nome').value.trim(),email:$('#f-email').value.trim(),telefone:tel.value,modelo:$('#f-modelo').value,lgpd:$('#f-lgpd').checked,quando:new Date().toISOString()};
+ const dig=lead.telefone.replace(/\D/g,'');let msg='';
+ if(lead.nome.length<3)msg='Informe seu nome completo.';else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(lead.email))msg='Confira o e-mail.';else if(dig.length<10)msg='Informe o celular com DDD.';else if(!lead.lgpd)msg='Para continuar, aceite o uso dos dados.';
+ $('#err').textContent=msg;if(msg)return;
+ $('#send').disabled=true;$('#send').textContent='Enviando…';let saved=false;
+ try{if(window.claude&&claude.use){const db=await claude.use('db');if(db){await db.doc('leads/'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)).set(lead);saved=true}}}catch(err){}
+ try{if(CFG.formEndpoint){const r=await fetch(CFG.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(lead)});saved=saved||r.ok}}catch(err){}
+ $('#send').disabled=false;$('#send').textContent='Liberar downloads';
+ unlock(lead.nome.split(' ')[0]);if(!saved)$('#status').textContent+=' (cadastro de demonstração: o envio ainda não está configurado)';
+});
+$('#dlist').addEventListener('click',async e=>{const b=e.target.closest('button[data-f]');if(!b||!unlocked)return;const f=DLS[b.dataset.f].f;
+ try{if(window.claude&&claude.use){const dl=await claude.use('downloads');if(dl){const blob=await (await fetch(f)).blob();await dl.save({filename:f,data:blob});return}}}catch(err){if(err&&err.name!=='TypeError'){$('#status').textContent='Download cancelado.';return}}
+ const a=document.createElement('a');a.href=f;a.download=f;document.body.appendChild(a);a.click();a.remove();});
+}
+</script>
+</body>
+</html>
