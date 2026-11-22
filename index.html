@@ -178,7 +178,8 @@ footer a{color:#eef6fb}
 
 <script>
 {
-const CFG={formEndpoint:''}; // hospedagem estática: URL do Formspree ou do Google Apps Script que recebe os cadastros
+const CFG={formEndpoint:''}; // a URL do Google Apps Script vem de config.json
+fetch('config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{if(c&&c.formEndpoint)CFG.formEndpoint=c.formEndpoint}).catch(()=>{});
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const NEWS=[
@@ -251,7 +252,7 @@ $('#lead').addEventListener('submit',async e=>{e.preventDefault();
  $('#err').textContent=msg;if(msg)return;
  $('#send').disabled=true;$('#send').textContent='Enviando…';let saved=false;
  try{if(window.claude&&claude.use){const db=await claude.use('db');if(db){await db.doc('leads/'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)).set(lead);saved=true}}}catch(err){}
- try{if(CFG.formEndpoint){const r=await fetch(CFG.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(lead)});saved=saved||r.ok}}catch(err){}
+ try{if(CFG.formEndpoint){await fetch(CFG.formEndpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...lead,origem:location.hostname})});saved=true}}catch(err){}
  $('#send').disabled=false;$('#send').textContent='Liberar downloads';
  unlock(lead.nome.split(' ')[0]);if(!saved)$('#status').textContent+=' (cadastro de demonstração: o envio ainda não está configurado)';
 });
